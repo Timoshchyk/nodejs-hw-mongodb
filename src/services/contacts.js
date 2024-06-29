@@ -1,14 +1,13 @@
+
+
 import { ContactsCollection } from '../db/model.js';
 
-export const getAllContacts = async () => {
-  const contacts = await ContactsCollection.find();
-
-  return contacts;
+export const getAllContacts = async (limit, skip, sortOptions = {}, filter = {}) => {
+  return ContactsCollection.find(filter).limit(limit).skip(skip).sort(sortOptions);
 };
 
 export const getContactById = async (contactId) => {
   const contact = await ContactsCollection.findById(contactId);
-
   return contact;
 };
 
@@ -38,4 +37,8 @@ export const updateContact = async (contactId, payload, options = {}) => {
     contact: rawResult.value,
     isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
+};
+
+export const getContactsCount = async (filter = {}) => {
+  return ContactsCollection.countDocuments(filter);
 };

@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const contactsSchema = new Schema(
   {
@@ -16,17 +16,25 @@ const contactsSchema = new Schema(
     },
     isFavourite: {
       type: Boolean,
+      required: true,
       default: false,
     },
     contactType: {
       type: String,
-      enum: ['work', 'home', 'personal'],
-      default: 'personal',
       required: true,
+      default: 'personal',
+      enum: ['work', 'home', 'personal'],
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: false,
+    },
+    photo: { type: String },
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
